@@ -1,7 +1,7 @@
 # LabAssignment2
 Lab Assignment 2 - Chadd, Antonio, Harley
 
-Welcome to the Assignment! :mechanical_arm: 
+Welcome to SkyNet Bar :mechanical_arm: 
 
 Our proposed design is a bartending set-up that utilises the KUKA KR 6 R900 Sixx and UR3 (potential to change). The two robots will work in harmony to create several drinks including some cocktails, beer, and wine. Allowing a seamless experience from ordering to serving. The system will incorporate numerous safety features to ensure patrons are always kept safe (E-stop, sensors, barriers etc.). There will be an appropriate GUI where users can select the drink that they would like. In addition, there will be a joystick controller where patrons can move the robot in a safe manner. 
 
