@@ -5,7 +5,7 @@ classdef KUKA < handle
         
         %> workspace
         workspace = [-1 1 -1 1 0 1];   
-      
+      % This is test code
     end
     
     methods%% Class for KUKA robot simulation
