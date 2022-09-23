@@ -37,6 +37,7 @@ classdef UR3 < handle
             L6 = Link('d',0.0819,'a',0,'alpha',0,'qlim',deg2rad([-360,360]), 'offset', 0);
              
             self.model = SerialLink([L1 L2 L3 L4 L5 L6],'name',name);
+            self.model.base = transl(-0.4,-0.4,0.3);
         end
 
         %% PlotAndColourRobot

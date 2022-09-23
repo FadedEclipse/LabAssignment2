@@ -37,6 +37,7 @@ classdef KUKA < handle
             L6 = Link('d',0.08,'a',0,'alpha',0,'offset',-pi/2,'qlim',[deg2rad(-350),deg2rad(350)]);
             
             self.model = SerialLink([L1 L2 L3 L4 L5 L6],'name',name);
+            self.model.base = transl(0.5,0,0) * trotz(-pi/2);
         end
 
         %% PlotAndColourRobot
