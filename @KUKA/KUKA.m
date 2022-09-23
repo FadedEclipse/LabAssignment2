@@ -8,7 +8,6 @@ classdef KUKA < handle
    
     end
     
-    %hello
     methods%% Class for KUKA robot simulation
         function self = KUKA(toolModelAndTCPFilenames)
             if 0 < nargin
