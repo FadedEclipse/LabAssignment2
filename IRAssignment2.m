@@ -2,6 +2,7 @@ clc
 clf
 hold on 
 clear all
+camlight;
 axis ([-1.25 1.25 -2 1 0 1.28]);
 
 ur3 = UR3();
