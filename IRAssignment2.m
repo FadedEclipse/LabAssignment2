@@ -4,10 +4,10 @@ hold on
 clear all
 axis ([-1.25 1.25 -2 1 0 1.28]);
 
-robot = UR3();
+ur3 = UR3();
 
 initialState = [1.5708 -1.5708 0 -1.5708 0 0];
-robot.model.animate(initialState);
+ur3.model.animate(initialState);
 
 
 kuka = KUKA();
@@ -20,6 +20,7 @@ PlaceObject('Bench.ply', [0,0.7,0]);
 PlaceObject('safetyfence.ply', [1,0,0]);
 PlaceObject('safetyfence.ply', [-1,0,0]);
 PlaceObject('UR3Box.ply',[-0.55,-0.5,0]);
+PlaceObject('SafetyButton.ply',[-1,-0.75,0.55]);
 
 Sprite_h = PlaceObject('Sprite.ply');
 vertices = get(Sprite_h,'Vertices');
