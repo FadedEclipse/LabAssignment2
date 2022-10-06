@@ -1,4 +1,4 @@
-function RMRCTraj(robot,point1,point2)
+function [ikPath] = RMRCTraj(robot,point1,point2)
 % 1.1) Set parameters for the simulation
 t = 10;             % Total time (s)
 deltaT = 0.1;      % Control frequency
@@ -64,11 +64,11 @@ end
 % 1.5) Plot the results
 plot3(x(1,:),x(2,:),x(3,:),'k.','LineWidth',1)
 
-
-for i = 1:steps
-robot.model.animate(qMatrix(i,:));
-drawnow();
-pause(0.01);  
-end
+ikPath = qMatrix;
+% for i = 1:steps
+% robot.model.animate(qMatrix(i,:));
+% drawnow();
+% pause(0.01);  
+% end
 end
 

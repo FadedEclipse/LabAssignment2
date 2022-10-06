@@ -65,8 +65,15 @@ set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 clc
 clf
+hold on
 robot=UR5();
 pt1 = transl(0.5,-0.3,0.4);
 pt2 = transl(0.5,0.3,0.4); % Trapezoidal trajectory scalar
 
-RMRCTraj(robot,pt1,pt2);
+[ikPath] = RMRCTraj(robot,pt1,pt2);
+
+for i = 1:100
+robot.model.animate(ikPath(i,:));
+drawnow();
+pause(0.01);  
+end
