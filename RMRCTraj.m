@@ -65,10 +65,6 @@ end
 plot3(x(1,:),x(2,:),x(3,:),'k.','LineWidth',1)
 
 ikPath = qMatrix;
-% for i = 1:steps
-% robot.model.animate(qMatrix(i,:));
-% drawnow();
-% pause(0.01);  
-% end
+
 end
 
