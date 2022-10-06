@@ -58,3 +58,15 @@ vertices = get(Vodka_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
 set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+
+
+
+%%
+
+clc
+clf
+robot=UR5();
+pt1 = transl(0.5,-0.3,0.4);
+pt2 = transl(0.5,0.3,0.4); % Trapezoidal trajectory scalar
+
+RMRCTraj(robot,pt1,pt2);

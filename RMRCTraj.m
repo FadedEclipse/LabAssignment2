@@ -1,6 +1,5 @@
 function RMRCTraj(robot,point1,point2)
 % 1.1) Set parameters for the simulation
-robotType = robot         % Load robot model
 t = 10;             % Total time (s)
 deltaT = 0.1;      % Control frequency
 steps = t/deltaT;   % No. of steps for simulation
@@ -65,11 +64,11 @@ end
 % 1.5) Plot the results
 plot3(x(1,:),x(2,:),x(3,:),'k.','LineWidth',1)
 
-for i = 1:steps
-robotType.model.animate(qMatrix(i,:));
-drawnnow();
-pause(0.01);
-end
 
+for i = 1:steps
+robot.model.animate(qMatrix(i,:));
+drawnow();
+pause(0.01);  
+end
 end
 
