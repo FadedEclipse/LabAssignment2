@@ -62,38 +62,38 @@ set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 
 
-ur3.model.animate(q1);
-qWaypoints = [q1 ...
-    ; [1.5254   -1.1450    0.6283   -0.4399         0         0] ...
-    ; [1.5254   -1.1450    1.0053   -0.4399    3.1416         0] ...
-    ; q2];
-
-qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
-
-for i = 1:size(qMatrix,1)
-ur3.model.animate(qMatrix(i,:));   
-
-drawnow();
-pause(0.01);  
-end
-
-q1 = q2;
-
-q2 = [2.4051 -1.0193 1.1309 -1.6965 3.1416 0];
-
-qWaypoints = [q1 ...
-    ; [1.9024   -1.3963    1.6336   -1.6965    3.1416         0] ...
-    ; [2.4051   -0.7680    0.8796   -1.6965    3.1416         0] ...
-    ; q2];
-
-qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
-
-for i = 1:size(qMatrix,1)
-ur3.model.animate(qMatrix(i,:));  
-
-drawnow();
-pause(0.01);  
-end
+% ur3.model.animate(q1);
+% qWaypoints = [q1 ...
+%     ; [1.5254   -1.1450    0.6283   -0.4399         0         0] ...
+%     ; [1.5254   -1.1450    1.0053   -0.4399    3.1416         0] ...
+%     ; q2];
+% 
+% qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
+% 
+% for i = 1:size(qMatrix,1)
+% ur3.model.animate(qMatrix(i,:));   
+% 
+% drawnow();
+% pause(0.01);  
+% end
+% 
+% q1 = q2;
+% 
+% q2 = [2.4051 -1.0193 1.1309 -1.6965 3.1416 0];
+% 
+% qWaypoints = [q1 ...
+%     ; [1.9024   -1.3963    1.6336   -1.6965    3.1416         0] ...
+%     ; [2.4051   -0.7680    0.8796   -1.6965    3.1416         0] ...
+%     ; q2];
+% 
+% qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
+% 
+% for i = 1:size(qMatrix,1)
+% ur3.model.animate(qMatrix(i,:));  
+% 
+% drawnow();
+% pause(0.01);  
+% end
 
 
 
