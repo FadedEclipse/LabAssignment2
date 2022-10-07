@@ -12,7 +12,7 @@ q2 = [1.2741 -1.3963 1.6336 -1.6965 3.1416 0];
 ur3.model.animate(q1);
 
 
-kuka = KUKA(); %There is something wrong with this function
+kuka = KUKA(); 
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
