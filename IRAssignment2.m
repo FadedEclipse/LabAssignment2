@@ -11,7 +11,7 @@ initialState = [1.5708 -1.5708 0 -1.5708 0 0];
 
 
 
-kuka = KUKA();
+kuka = KUKA(); %There is something wrong with this function
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
@@ -22,6 +22,12 @@ PlaceObject('safetyfence.ply', [1,0,0]);                                    %Spa
 PlaceObject('safetyfence.ply', [-1,0,0]);
 PlaceObject('UR3Box.ply',[-0.55,-0.5,0]);                                   %Spawn in UR3 box stand     
 PlaceObject('SafetyButton.ply',[-1,-0.75,0.55]);                            %Spawn in safety button
+PlaceObject('Cup1.ply',[-0.5,0.7,0.5]);                                     %Spawn in decorative stack of cups in the bar
+PlaceObject('Cup1.ply',[-0.55,0.7,0.65]);
+PlaceObject('Cup1.ply',[-0.45,0.7,0.65]);
+PlaceObject('Cup1.ply',[-0.525,0.7,0.80]);
+PlaceObject('Cup1.ply',[-0.475,0.7,0.80]);
+PlaceObject('Cup1.ply',[-0.5,0.7,0.95]);
 
 Sprite_h = PlaceObject('Sprite.ply');                                       %Spawn in bottle of sprite as a mixer
 vertices = get(Sprite_h,'Vertices');
