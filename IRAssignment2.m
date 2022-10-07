@@ -7,8 +7,9 @@ axis ([-1.25 1.25 -2 1 0 1.28]);
 
 ur3 = UR3();
 
-initialState = [1.5708 -1.5708 0 -1.5708 0 0];
-
+q1 = [1.5708 -1.5708 0 -1.5708 0 0];
+q2 = [1.2741 -1.3963 1.6336 -1.6965 3.1416 0];
+ur3.model.animate(q1);
 
 
 kuka = KUKA(); %There is something wrong with this function
@@ -65,17 +66,42 @@ vertices = get(Vodka_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
 set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
-initial = zeros(1,6);
-point1 = ur3.model.fkine(initial);
-point2 = transl(-0.7,-0.7,0.65)*trotx(-pi/2)*trotz(pi/2);
 
-[ikPath] = RMRCTraj(ur3,point1,point2);
 
-for i = 1:100
-ur3.model.animate(ikPath(i,:));
-drawnow();
-pause(0.01);  
-end
+% ur3.model.animate(q1);
+% qWaypoints = [q1 ...
+%     ; [1.5254   -1.1450    0.6283   -0.4399         0         0] ...
+%     ; [1.5254   -1.1450    1.0053   -0.4399    3.1416         0] ...
+%     ; q2];
+% 
+% qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
+% 
+% for i = 1:size(qMatrix,1)
+% ur3.model.animate(qMatrix(i,:));   
+% 
+% drawnow();
+% pause(0.01);  
+% end
+% 
+% q1 = q2;
+% 
+% q2 = [2.4051 -1.0193 1.1309 -1.6965 3.1416 0];
+% 
+% qWaypoints = [q1 ...
+%     ; [1.9024   -1.3963    1.6336   -1.6965    3.1416         0] ...
+%     ; [2.4051   -0.7680    0.8796   -1.6965    3.1416         0] ...
+%     ; q2];
+% 
+% qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
+% 
+% for i = 1:size(qMatrix,1)
+% ur3.model.animate(qMatrix(i,:));  
+% 
+% drawnow();
+% pause(0.01);  
+% end
+
+
 
 
 %%
