@@ -16,26 +16,26 @@ kuka = KUKA();
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
 surf([1.25,1.25;-1.25,-1.25],[1,1;1,1],[0,1.28;0,1.28],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
-PlaceObject('bar.ply', [0,-0.7,0]);
-PlaceObject('Bench.ply', [0,0.7,0]);
-PlaceObject('safetyfence.ply', [1,0,0]);
+PlaceObject('bar.ply', [0,-0.7,0]);                                         %Spawn in bar
+PlaceObject('Bench.ply', [0,0.7,0]);                                        %Spawn in bench
+PlaceObject('safetyfence.ply', [1,0,0]);                                    %Spawn in safety fences
 PlaceObject('safetyfence.ply', [-1,0,0]);
-PlaceObject('UR3Box.ply',[-0.55,-0.5,0]);
-PlaceObject('SafetyButton.ply',[-1,-0.75,0.55]);
+PlaceObject('UR3Box.ply',[-0.55,-0.5,0]);                                   %Spawn in UR3 box stand     
+PlaceObject('SafetyButton.ply',[-1,-0.75,0.55]);                            %Spawn in safety button
 
-Sprite_h = PlaceObject('Sprite.ply');
+Sprite_h = PlaceObject('Sprite.ply');                                       %Spawn in bottle of sprite as a mixer
 vertices = get(Sprite_h,'Vertices');
 
-transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.2,0.7,0.5)';
+transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.2,0.7,0.5)';   %Method taken from Canvas
 set(Sprite_h,'Vertices',transformedVertices(:,1:3));
 
-Coke_h = PlaceObject('Coke1.ply');
+Coke_h = PlaceObject('Coke1.ply');                                          %Spawn in bottle of coke as a mixer
 vertices = get(Coke_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.3,0.7,0.5)';
 set(Coke_h,'Vertices',transformedVertices(:,1:3));
 
-Cup_h = PlaceObject('Cup1.ply');
+Cup_h = PlaceObject('Cup1.ply');                                            %Spawn in cup
 vertices = get(Cup_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.5,-0.7,0.55)';
@@ -47,13 +47,13 @@ vertices = get(Cup2_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.65,-0.7,0.55)';
 set(Cup2_h,'Vertices',transformedVertices(:,1:3));
 
-Rum_h = PlaceObject('Rum.ply');
+Rum_h = PlaceObject('Rum.ply');                                             %Spawn in Rum as an alcoholic beverage
 vertices = get(Rum_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.5,0.7,0.5)';
 set(Rum_h,'Vertices',transformedVertices(:,1:3));
 
-Vodka_h = PlaceObject('Vodka1.ply');
+Vodka_h = PlaceObject('Vodka1.ply');                                        %Spawn in Vodka as an alcoholic beverage
 vertices = get(Vodka_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
