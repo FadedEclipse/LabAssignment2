@@ -77,11 +77,14 @@ end
 clc
 clf
 hold on
-robot=UR5();
+q = [1.5708 -1.5708 0 -1.5708 0 0];
+robot=UR3();
+robot.model.base = transl(0,0,0);
+robot.model.animate(q);
 steps = 100;
 a=robot.model.getpos();
 pt1 = robot.model.fkine(a);
-pt2 = transl(0.5,0.3,0); % Trapezoidal trajectory scalar
+pt2 = transl(0.2,0.2,0.4); % Trapezoidal trajectory scalar
 
 traj = ctraj(pt1,pt2,steps);
 path = robot.model.ikcon(traj,zeros(1,6));
@@ -98,7 +101,7 @@ end
 
 a=robot.model.getpos();
 pt1 = robot.model.fkine(a);
-pt2 = transl(-0.5,0.3,0); % Trapezoidal trajectory scalar
+pt2 = transl(-0.2,0.2,0.4); % Trapezoidal trajectory scalar
 
 traj = ctraj(pt1,pt2,steps);
 path = robot.model.ikcon(traj,zeros(1,6));
@@ -113,7 +116,7 @@ end
 
 a=robot.model.getpos();
 pt1 = robot.model.fkine(a);
-pt2 = transl(-0.5,-0.3,0); % Trapezoidal trajectory scalar
+pt2 = transl(-0.2,-0.2,0.4); % Trapezoidal trajectory scalar
 
 traj = ctraj(pt1,pt2,steps);
 path = robot.model.ikcon(traj,zeros(1,6));
@@ -128,7 +131,7 @@ end
 
 a=robot.model.getpos();
 pt1 = robot.model.fkine(a);
-pt2 = transl(0.5,-0.3,0); % Trapezoidal trajectory scalar
+pt2 = transl(0.2,-0.2,0.4); % Trapezoidal trajectory scalar
 
 traj = ctraj(pt1,pt2,steps);
 path = robot.model.ikcon(traj,zeros(1,6));
