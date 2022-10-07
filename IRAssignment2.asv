@@ -37,7 +37,7 @@ transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.3,0.7,0.5)'
 set(Coke_h,'Vertices',transformedVertices(:,1:3));
 
 Cup_h = PlaceObject('Cup1.ply');
-vertices = get(Cup_h,'Vertices');
+vertices = [get(Cup_h,'Vertices'), ones(size(get(Cup_h,'Vertices'),1),1)];
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.5,-0.7,0.55)';
 set(Cup_h,'Vertices',transformedVertices(:,1:3));
@@ -71,8 +71,7 @@ qWaypoints = [q1 ...
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
 for i = 1:size(qMatrix,1)
-ur3.model.animate(qMatrix(i,:));   
-
+ur3.model.animate(qMatrix(i,:));     
 drawnow();
 pause(0.01);  
 end
@@ -91,11 +90,15 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
 ur3.model.animate(qMatrix(i,:));  
 
+tr = ur3.model.fkine(qMatrix(i,:));
+
+transformedVertices = [vertices] * tr';
+set(Cup_h,'Vertices',transformedVertices(:,1:3));
+
+
 drawnow();
 pause(0.01);  
 end
-
-
 
 
 %%
