@@ -24,11 +24,14 @@ PlaceObject('safetyfence.ply', [-1,0,0]);
 PlaceObject('UR3Box.ply',[-0.55,-0.5,0]);                                   %Spawn in UR3 box stand     
 PlaceObject('SafetyButton.ply',[-1,-0.75,0.55]);                            %Spawn in safety button
 PlaceObject('Cup1.ply',[-0.5,0.7,0.5]);                                     %Spawn in decorative stack of cups in the bar
+PlaceObject('Cup1.ply',[-0.6,0.7,0.5]);
+PlaceObject('Cup1.ply',[-0.4,0.7,0.5]);
 PlaceObject('Cup1.ply',[-0.55,0.7,0.65]);
 PlaceObject('Cup1.ply',[-0.45,0.7,0.65]);
-PlaceObject('Cup1.ply',[-0.525,0.7,0.80]);
-PlaceObject('Cup1.ply',[-0.475,0.7,0.80]);
-PlaceObject('Cup1.ply',[-0.5,0.7,0.95]);
+PlaceObject('Cup1.ply',[-0.5,0.7,0.8]);
+PlaceObject('aid.ply',[1.35,0.6,0]);
+PlaceObject('fire.ply',[-1.45,0.8,0]);
+PlaceObject('sign.ply',[-1.04,0,0.5]);
 
 Sprite_h = PlaceObject('Sprite.ply');                                       %Spawn in bottle of sprite as a mixer
 vertices = get(Sprite_h,'Vertices');
