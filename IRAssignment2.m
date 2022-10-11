@@ -46,13 +46,13 @@ vertices = get(Coke_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.3,0.7,0.5)';
 set(Coke_h,'Vertices',transformedVertices(:,1:3));
 
-Cup_h = PlaceObject('Cup1.ply');                                            %Spawn in cup
+Cup_h = PlaceObject('cocktailshaker.ply');                                            %Spawn in cup
 vertices = get(Cup_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.5,-0.7,0.55)';
 set(Cup_h,'Vertices',transformedVertices(:,1:3));
 
-Cup2_h = PlaceObject('Cup1.ply');
+Cup2_h = PlaceObject('cocktailshaker.ply');
 vertices = get(Cup2_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.65,-0.7,0.55)';
@@ -82,9 +82,6 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
 ur3.model.animate(qMatrix(i,:)); 
 
-    tr = ur3.model.fkine(qMatrix(i,:));
-    transformedVertices = [vertices,ones(size(vertices,1),1)] * tr';
-    set(Rum_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
