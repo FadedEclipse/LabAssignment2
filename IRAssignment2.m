@@ -82,6 +82,9 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
 ur3.model.animate(qMatrix(i,:)); 
 
+tr = ur3.model.fkine(qMatrix(i,:));
+    transformedVertices = [vertices,ones(size(vertices,1),1)] * tr';
+    set(Cup_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
