@@ -46,11 +46,13 @@ vertices = get(Coke_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.3,0.7,0.5)';
 set(Coke_h,'Vertices',transformedVertices(:,1:3));
 
-Cup_h = PlaceObject('cocktailshaker.ply');                                            %Spawn in cup
-vertices = get(Cup_h,'Vertices');
+
+drink_h = PlaceObject('cocktailshaker.ply');                                        %Spawn in Vodka as an alcoholic beverage
+vertices = get(drink_h ,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.5,-0.7,0.55)';
-set(Cup_h,'Vertices',transformedVertices(:,1:3));
+set(drink_h,'Vertices',transformedVertices(:,1:3));
+
 
 Cup2_h = PlaceObject('cocktailshaker.ply');
 vertices = get(Cup2_h,'Vertices');
@@ -84,7 +86,7 @@ ur3.model.animate(qMatrix(i,:));
 
 tr = ur3.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * tr';
-    set(Cup_h,'Vertices',transformedVertices(:,1:3));
+    set(drink_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
