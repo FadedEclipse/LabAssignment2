@@ -77,7 +77,7 @@ set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 qWaypoints = [q1 ...
     ; [1.5254   -1.1450    0.6283   -1.5708    3.1416         0] ...
-    ; [ 1.5254   -1.5708    1.5708   -1.5709    3.1416         0]];
+    ; [  1.5254   -1.5708    1.5708   -1.5709    3.1416         0]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
@@ -86,13 +86,13 @@ ur3.model.animate(qMatrix(i,:));
 
 tr = ur3.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
-    set(drink_h,'Vertices',transformedVertices(:,1:3));
+    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
 end
 
-q1 =[1.5254   -1.5708    1.5708   -1.5709    3.1416         0]
+q1 =[1.5254   -1.5708    1.5708   -1.5709    3.1416         0];
 qWaypoints = [q1 ...
     ; [1.5254   -1.5708    1.5708   -1.5709    3.2673         0] ...
     ; [ 1.5254   -1.5708    1.5708   -1.5709    4.1469         0]];
@@ -111,16 +111,7 @@ pause(0.01);
 end
 
 
-<<<<<<< Updated upstream
-=======
 
-
-
-
-
-
-
->>>>>>> Stashed changes
 %%
 
 clc
