@@ -7,7 +7,7 @@ axis ([-2 2 -2 1 0 1.28]);
 
 ur3 = UR3();
 
-q1 = [1.5708 -1.5708 0 -1.5708 0 0];
+q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
 q2 = [1.2741 -1.3963 1.6336 -1.6965 3.1416 0];
 ur3.model.animate(q1);
 
@@ -76,8 +76,8 @@ set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 
 qWaypoints = [q1 ...
-    ; [1.5254   -1.1450    0.6283   -0.4399         0         0] ...
-    ; [1.5254   -1.2707    1.0053   -1.0682    3.1416         0]];
+    ; [1.5254   -1.1450    0.6283   -1.5708    3.1416         0] ...
+    ; [ 1.5254   -1.5708    1.5708   -1.5709    3.1416         0]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
@@ -85,35 +85,42 @@ for i = 1:size(qMatrix,1)
 ur3.model.animate(qMatrix(i,:)); 
 
 tr = ur3.model.fkine(qMatrix(i,:));
-    transformedVertices = [vertices,ones(size(vertices,1),1)] * tr';
+    transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
     set(drink_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
 end
 
+q1 =[1.5254   -1.5708    1.5708   -1.5709    3.1416         0]
+qWaypoints = [q1 ...
+    ; [1.5254   -1.5708    1.5708   -1.5709    3.2673         0] ...
+    ; [ 1.5254   -1.5708    1.5708   -1.5709    4.1469         0]];
 
+qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
+for i = 1:size(qMatrix,1)
+ur3.model.animate(qMatrix(i,:)); 
 
-a = [1.5254   -1.2707    1.0053   -1.0682    3.1416         0];
-
-
-b = transl(-0.46,-0.7,0.625)*troty(-pi/2);
-
-bikine = ur3.model.ikcon(b,a);
-
-traj = jtraj(a,bikine,25);
-
-
-for i = 1:size(traj,1)
-ur3.model.animate(traj(i,:));  
-
+tr = ur3.model.fkine(qMatrix(i,:));
+    transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
+    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 drawnow();
 pause(0.01);  
 end
 
 
+<<<<<<< Updated upstream
+=======
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
 %%
 
 clc
