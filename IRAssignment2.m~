@@ -33,7 +33,7 @@ PlaceObject('aid.ply',[1.35,0.6,0]);
 PlaceObject('fire.ply',[-1.45,0.8,0]);
 PlaceObject('sign1.ply',[1.04,0,0.5]);
 PlaceObject('sign.ply',[-1.04,0,0.5]);
-PlaceObject('seccy.ply',[-1.55,-0.85,0]);
+
 
 
 Sprite_h = PlaceObject('Sprite.ply');                                       %Spawn in bottle of sprite as a mixer
