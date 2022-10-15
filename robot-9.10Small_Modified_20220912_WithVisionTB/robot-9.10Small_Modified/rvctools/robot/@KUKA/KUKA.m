@@ -29,7 +29,7 @@ classdef KUKA < handle
         function GetKUKARobot(self)
             pause(0.001);
             name = ['KUKA_',datestr(now,'yyyymmddTHHMMSSFFF')];
-            L1 = Link('d',0.4,'a',0.025,'alpha',pi/2,'offset',0,'qlim',[deg2rad(-170),deg2rad(170)]);
+            L1 = Link('d',0.4,'a',0.025,'alpha',pi/2,'offset',0,'qlim',[deg2rad(-360),deg2rad(360)]);
             L2 = Link('d',0,'a',0.455,'alpha',0,'offset',pi/2,'qlim',[deg2rad(-190),deg2rad(45)]);
             L3 = Link('d',0,'a',0.035,'alpha',pi/2,'offset',0,'qlim',[deg2rad(-120),deg2rad(156)]);
             L4 = Link('d',0.460,'a',0,'alpha',pi/2,'offset',0,'qlim',[deg2rad(-185),deg2rad(185)]);

@@ -1,6 +1,6 @@
 function Vodka(ur3,kuka)
 %Moves and pours Vodka Bottle
-%KUKA TRANSPORTS VODKA BOTTLE
+
 
 Vodka_h = PlaceObject('Vodka1.ply');                                        %Spawn in Vodka as an alcoholic beverage
 vertices = get(Vodka_h,'Vertices');
@@ -9,6 +9,8 @@ transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)'
 set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
+
+%KUKA TRANSPORTS VODKA BOTTLE
 
 %kuka moves from inital zeros pos to bottle home position
 q1kuka = [ 0     0     0     0     0     0];
