@@ -1,16 +1,14 @@
-function Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices)
-%Moves and pours Vodka Bottle
-
+function Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices)
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
 
-%KUKA TRANSPORTS VODKA BOTTLE
+%KUKA TRANSPORTS SPRITE BOTTLE
 
 %kuka moves from inital zeros pos to bottle home position
 q1kuka = [ 0     0     0     0     0     0];
 qWaypoints = [q1kuka ...
-    ; [2.9671    0.2871   -0.7707         0   -0.6981         0] ...
-    ; [3.0020   -0.4511   -0.1445         0   -0.6981    1.5708]];
+    ; [3.5954    0.2871   -0.7707         0   -0.6981         0] ...
+    ; [3.5517   -0.5331   -0.0482         0   -0.5725    1.5708]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
@@ -22,10 +20,10 @@ for i = 1:size(qMatrix,1)
 end
 
 %kuka transports bottle to main bar position to put in reach of ur3
-q1kuka = [3.0020   -0.4511   -0.1445         0   -0.6981    1.5708];
+q1kuka = [3.5517   -0.5331   -0.0482         0   -0.5725    1.5708];
 qWaypoints = [q1kuka ...
+    ; [3.5954    0.2871   -0.7707         0   -0.6981    1.5708] ...
     ; [1.5080    0.6153   -0.5299         0    0.0978    1.5708] ...
-    ; [-0.5934   -0.2461   -0.3372         0   -0.5305        1.5708] ...
     ; [-0.7121   -0.7793    0.4817         0   -0.2373    1.5708]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
@@ -35,7 +33,7 @@ for i = 1:size(qMatrix,1)
     
     tr = kuka.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.055,0,0)' *  tr';
-    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+    set(Sprite_h,'Vertices',transformedVertices(:,1:3));
     
     drawnow();
     pause(0.01);
@@ -43,7 +41,7 @@ end
 
 %place bottle on main bar table
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.072,-0.662,0.55)';
-set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+set(Sprite_h,'Vertices',transformedVertices(:,1:3));
 
 
 %kuka moves out of area back to zeros inital pos
@@ -63,7 +61,7 @@ end
 
 
 
-%UR3 POURS VODKA BOTTLE
+%UR3 POURS SPRITE BOTTLE
 
 %ur3 moves from inital start pos to pick up bottle
 qWaypoints = [q1 ...
@@ -94,7 +92,7 @@ for i = 1:size(qMatrix,1)
     
     tr = ur3.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
-    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+    set(Sprite_h,'Vertices',transformedVertices(:,1:3));
     
     drawnow();
     pause(0.01);
@@ -116,14 +114,14 @@ for i = 1:size(qMatrix,1)
     
     tr = ur3.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
-    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+    set(Sprite_h,'Vertices',transformedVertices(:,1:3));
     
     drawnow();
     pause(0.01);
 end
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(-0.072,-0.662,0.55)';
-set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+set(Sprite_h,'Vertices',transformedVertices(:,1:3));
 
 %move ur3 out of area back to initial starting pos
 q1 =[2.4050   -1.0681    1.0681   -1.5709    3.1416         0];
@@ -159,8 +157,8 @@ end
 q1kuka = [-0.7121   -0.7793    0.4817         0   -0.2373    1.5708];
 qWaypoints = [q1kuka ...
     ; [1.5080    0.6153   -0.5299         0    0.0978    1.5708] ...
-    ; [2.9671    0.2871   -0.7707         0   -0.6981        1.5708] ...
-    ; [2.9671   -0.4511   -0.1445         0   -0.6981    1.5708]];
+    ; [3.5954    0.2871   -0.7707         0   -0.6981    1.5708] ...
+    ; [3.5517   -0.5331   -0.0482         0   -0.5725    1.5708]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
@@ -169,20 +167,20 @@ for i = 1:size(qMatrix,1)
     
     tr = kuka.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.055,0,0)' * tr';
-    set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+    set(Sprite_h,'Vertices',transformedVertices(:,1:3));
     
     drawnow();
     pause(0.01);
 end
 
 %place bottle back home
-transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
-set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.2,0.7,0.5)';
+set(Sprite_h,'Vertices',transformedVertices(:,1:3));
 
 %return kuka to inital zeros pos
-q1kuka = [2.9671   -0.4511   -0.1445         0   -0.6981    1.5708];
+q1kuka = [3.5517   -0.5331   -0.0482         0   -0.5725    1.5708];
 qWaypoints = [q1kuka ...
-    ; [2.9671    0.2871   -0.7707         0   -0.6981         0] ...
+    ; [3.5954    0.2871   -0.7707         0   -0.6981         0] ...
     ; [0 0 0 0 0 0]];
 
 qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
@@ -193,7 +191,5 @@ for i = 1:size(qMatrix,1)
     drawnow();
     pause(0.01);
 end
-
-
 end
 
