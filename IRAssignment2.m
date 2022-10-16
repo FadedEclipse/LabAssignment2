@@ -3,15 +3,20 @@ clf
 hold on 
 clear all
 camlight;
+
 axis ([-2 2 -2 1 0 1.28]);
 
-ur3 = UR3();
+
+
+ ur3 = UR3();
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
 ur3.model.animate(q1);
 
 
 kuka = KUKA(); 
+
+
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
@@ -57,7 +62,7 @@ Vodka_h = PlaceObject('Vodka1.ply');                                        %Spa
 vertices = get(Vodka_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
-set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+ = set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 Rum_h = PlaceObject('Rum.ply');                                             %Spawn in Rum as an alcoholic beverage
 vertices = get(Rum_h,'Vertices');
@@ -71,10 +76,17 @@ set(Rum_h,'Vertices',transformedVertices(:,1:3));
 % integrated into the GUI so that instead of commenting and uncommenting
 % functions, a button select will be used to call each drink function
 
-Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices);
+Skynet_GUI;
+
+%Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices);
 
 %Rum(ur3,kuka,Rum_h,vertices,transformedVertices);
 
 %Coke(ur3,kuka,Coke_h,vertices,transformedVertices);
 
-Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices);
+%Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices);
+
+
+
+
+
