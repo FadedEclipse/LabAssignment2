@@ -62,7 +62,7 @@ Vodka_h = PlaceObject('Vodka1.ply');                                        %Spa
 vertices = get(Vodka_h,'Vertices');
 
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.6,0.7,0.5)';
- = set(Vodka_h,'Vertices',transformedVertices(:,1:3));
+set(Vodka_h,'Vertices',transformedVertices(:,1:3));
 
 Rum_h = PlaceObject('Rum.ply');                                             %Spawn in Rum as an alcoholic beverage
 vertices = get(Rum_h,'Vertices');
@@ -75,7 +75,7 @@ set(Rum_h,'Vertices',transformedVertices(:,1:3));
 % and comment functions (FOR NOW - WHILE GUI IS BEING DEVELOPED) to select what liquids are served - this will be
 % integrated into the GUI so that instead of commenting and uncommenting
 % functions, a button select will be used to call each drink function
-
+%%
 Skynet_GUI;
 
 %Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices);
