@@ -77,4 +77,4 @@ Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices);
 
 %Coke(ur3,kuka,Coke_h,vertices,transformedVertices);
 
-%Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices);
+Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices);
