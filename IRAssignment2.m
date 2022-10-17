@@ -88,8 +88,8 @@ kuka = KUKA();
 q = [ -0.6283   -0.7383   -0.1927    0.0646         0         0];
 
 
-centerPoint = [0,0,0];
-radii = [0.15,0.15,0.3];
+centerPoint = [0,0,0.15];
+radii = [0.1,0.1,0.3];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{1} = [X(:),Y(:),Z(:)];
@@ -99,7 +99,7 @@ radii = [0.15,0.15,0.3];
 
 
 centerPoint = [0,0,0];
-radii = [0.15,0.3,0.15];
+radii = [0.1,0.3,0.1];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{2} = [X(:),Y(:),Z(:)];
@@ -108,8 +108,8 @@ radii = [0.15,0.3,0.15];
     warning on;
     
     
-centerPoint = [0,0,0];
-radii = [0.3,0.15,0.15];
+centerPoint = [-0.125,0,0];
+radii = [0.25,0.1,0.1];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{3} = [X(:),Y(:),Z(:)];
@@ -117,8 +117,8 @@ radii = [0.3,0.15,0.15];
     kuka.model.faces{3} = delaunay(kuka.model.points{3});    
     warning on;
 
-centerPoint = [0,0,0];
-radii = [0.15,0.15,0.3];
+centerPoint = [0,0,0.125];
+radii = [0.1,0.1,0.25];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{4} = [X(:),Y(:),Z(:)];
@@ -126,8 +126,8 @@ radii = [0.15,0.15,0.3];
     kuka.model.faces{4} = delaunay(kuka.model.points{4});    
     warning on;    
 
-centerPoint = [0,0,0];
-radii = [0.15,0.25,.15];
+centerPoint = [0,-0.1,0];
+radii = [0.1,0.2,0.1];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{5} = [X(:),Y(:),Z(:)];
@@ -135,8 +135,8 @@ radii = [0.15,0.25,.15];
     kuka.model.faces{5} = delaunay(kuka.model.points{5});    
     warning on; 
     
-centerPoint = [0,0,0];
-radii = [0.15,0.15,0.25];
+centerPoint = [0,0,-0.125];
+radii = [0.1,0.1,0.25];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{6} = [X(:),Y(:),Z(:)];
@@ -144,8 +144,8 @@ radii = [0.15,0.15,0.25];
     kuka.model.faces{6} = delaunay(kuka.model.points{6});    
     warning on; 
     
-centerPoint = [0,0,0];
-radii = [0.15,0.15,0.25];
+centerPoint = [0,0,-0.125];
+radii = [0.1,0.1,0.25];
 [X,Y,Z] = ellipsoid( centerPoint(1), centerPoint(2), centerPoint(3), radii(1), radii(2), radii(3) );
 
     kuka.model.points{7} = [X(:),Y(:),Z(:)];
@@ -157,6 +157,8 @@ radii = [0.15,0.15,0.25];
 axis equal
 camlight
 
+kuka.model.plot3d(zeros(1,6));
+
 Bar = PlaceObject('bar.ply'); 
 vertices = get(Bar,'Vertices');
 
@@ -165,12 +167,12 @@ set(Bar,'Vertices',transformedVertices(:,1:3));
 
 
 
-
-q = [ 0   -0.5742         0         0         0         0];
-tr = kuka.model.fkine(q);
-cubePointsAndOnes = [inv(tr) * transformedVertices']';
-updatedCubePoints = cubePointsAndOnes(:,1:3);
-algebraicDist = GetAlgebraicDist(updatedCubePoints, centerPoint, radii);
-pointsInside = find(algebraicDist < 1);
-display(['2.9: There are now ', num2str(size(pointsInside,1)),' points inside']);
+% 
+% q = [ 0.0000   -1.1894    0.2890   -0.0646    0.5864         0];
+% tr = kuka.model.fkine(q);
+% cubePointsAndOnes = [inv(tr) * transformedVertices']';
+% updatedCubePoints = cubePointsAndOnes(:,1:3);
+% algebraicDist = GetAlgebraicDist(updatedCubePoints, centerPoint, radii);
+% pointsInside = find(algebraicDist < 1);
+% display(['2.9: There are now ', num2str(size(pointsInside,1)),' points inside']);
 
