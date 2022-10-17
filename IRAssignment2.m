@@ -75,7 +75,7 @@ set(Rum_h,'Vertices',transformedVertices(:,1:3));
 % and comment functions (FOR NOW - WHILE GUI IS BEING DEVELOPED) to select what liquids are served - this will be
 % integrated into the GUI so that instead of commenting and uncommenting
 % functions, a button select will be used to call each drink function
-%%
+
 Skynet_GUI;
 
 %Vodka(ur3,kuka,Vodka_h,vertices,transformedVertices);
