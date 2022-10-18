@@ -1,4 +1,4 @@
-function Rum(ur3,kuka,Rum_h,vertices,transformedVertices)
+function Rum(ur3,kuka,Rum_h,vertices,transformedVertices,BartransformedVertices,BenchtransformedVertices)
 
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
@@ -15,6 +15,8 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
 for i = 1:size(qMatrix,1)
     kuka.model.animate(qMatrix(i,:));
+
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BenchtransformedVertices);
     
     drawnow();
     pause(0.01);
@@ -36,6 +38,8 @@ for i = 1:size(qMatrix,1)
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.055,0,0)' *  tr';
     set(Rum_h,'Vertices',transformedVertices(:,1:3));
     
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BartransformedVertices);
+    
     drawnow();
     pause(0.01);
 end
@@ -56,6 +60,8 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
     kuka.model.animate(qMatrix(i,:));
     
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BartransformedVertices);
+    
     drawnow();
     pause(0.01);
 end
@@ -74,6 +80,7 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
     ur3.model.animate(qMatrix(i,:));
     
+    UR3SphereCollisionDetection(ur3,qMatrix(i,:),BartransformedVertices)
     
     drawnow();
     pause(0.01);
@@ -94,6 +101,8 @@ for i = 1:size(qMatrix,1)
     tr = ur3.model.fkine(qMatrix(i,:));
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
     set(Rum_h,'Vertices',transformedVertices(:,1:3));
+    
+    UR3SphereCollisionDetection(ur3,qMatrix(i,:),BartransformedVertices)
     
     drawnow();
     pause(0.01);
@@ -117,6 +126,8 @@ for i = 1:size(qMatrix,1)
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.1,0,0)' * tr';
     set(Rum_h,'Vertices',transformedVertices(:,1:3));
     
+    UR3SphereCollisionDetection(ur3,qMatrix(i,:),BartransformedVertices)
+    
     drawnow();
     pause(0.01);
 end
@@ -135,6 +146,8 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 for i = 1:size(qMatrix,1)
     ur3.model.animate(qMatrix(i,:));
     
+    UR3SphereCollisionDetection(ur3,qMatrix(i,:),BartransformedVertices)
+    
     drawnow();
     pause(0.01);
 end
@@ -149,6 +162,8 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
 for i = 1:size(qMatrix,1)
     kuka.model.animate(qMatrix(i,:));
+    
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BartransformedVertices);
     
     drawnow();
     pause(0.01);
@@ -170,6 +185,8 @@ for i = 1:size(qMatrix,1)
     transformedVertices = [vertices,ones(size(vertices,1),1)] * troty(pi/2)' * transl(-0.055,0,0)' * tr';
     set(Rum_h,'Vertices',transformedVertices(:,1:3));
     
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BenchtransformedVertices);
+    
     drawnow();
     pause(0.01);
 end
@@ -188,6 +205,8 @@ qMatrix = InterpolateWaypointRadians(qWaypoints,deg2rad(5));
 
 for i = 1:size(qMatrix,1)
     kuka.model.animate(qMatrix(i,:));
+    
+    KUKASphereCollisionDetection(kuka,qMatrix(i,:),BenchtransformedVertices);
     
     drawnow();
     pause(0.01);
