@@ -3,8 +3,7 @@ clf
 hold on 
 clear all
 camlight;
-
-axis ([-2 2 -2 1 0 1.28]);
+caxis ([-2 2 -2 1 0 1.28]);
 
 
 
