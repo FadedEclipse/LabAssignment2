@@ -11,12 +11,13 @@ axis ([-2 2 -2 1 0 1.28]);
  ur3 = UR3();
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
+qK = [pi/2  pi/4         -pi/4   0    0        0];
 ur3.model.animate(q1);
 
 
 kuka = KUKA(); 
 
-
+kuka.model.animate(qK);
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
@@ -81,7 +82,151 @@ vertices = get(Rum_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.5,0.7,0.5)';
 set(Rum_h,'Vertices',transformedVertices(:,1:3));
 
+%% Image Based Visual Servoing
 
+% Create image target (points in the image plane) 
+pStar = [662 362 362 662; 362 362 662 662];
+
+%Create 3D points
+P=[1.8,1.8,1.8,1.8;
+-0.25,0.25,0.25,-0.25;
+ 1.25,1.25,0.75,0.75];
+
+% Add the camera
+cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...
+'resolution', [1024 1024], 'centre', [512 512],'name', 'Kukacamera');
+
+%Set FPS
+fps = 25;
+
+
+%Define values
+%gain of the controler
+lambda = 0.6;
+%depth of the IBVS
+depth = mean (P(1,:));
+
+
+Tc0= kuka.model.fkine(qK);
+
+drawnow
+
+% plot camera and points
+cam.T = Tc0;
+
+% Display points in 3D and the camera
+cam.plot_camera('Tcam',Tc0, 'label','scale',0.15);
+plot_sphere(P, 0.02, 'b')
+lighting gouraud
+light
+
+%Project points to the image
+p = cam.plot(P, 'Tcam', Tc0);
+
+%camera view and plotting
+cam.clf()
+cam.plot(pStar, '*'); % create the camera view
+cam.hold(true);
+cam.plot(P, 'Tcam', Tc0, 'o'); % create the camera view
+pause(2)
+cam.hold(true);
+cam.plot(P);    % show initial view
+
+
+%Initialise display arrays
+vel_p = [];
+uv_p = [];
+history = [];
+
+
+% loop of the visual servoing
+ksteps = 0;
+ while true
+        ksteps = ksteps + 1;
+        
+        % compute the view of the camera
+        uv = cam.plot(P);
+        
+        % compute image plane error as a column
+        e = pStar-uv;   % feature error
+        e = e(:);
+        Zest = [];
+        
+        % compute the Jacobian
+        if isempty(depth)
+            % exact depth from simulation (not possible in practice)
+            pt = homtrans(inv(Tcam), P);
+            J = cam.visjac_p(uv, pt(3,:) );
+        elseif ~isempty(Zest)
+            J = cam.visjac_p(uv, Zest);
+        else
+            J = cam.visjac_p(uv, depth );
+        end
+
+        % compute the velocity of camera in camera frame
+        try
+            v = lambda * pinv(J) * e;
+        catch
+            status = -1;
+            return
+        end
+        fprintf('v: %.3f %.3f %.3f %.3f %.3f %.3f\n', v);
+
+        %compute robot's Jacobian and inverse
+        J2 = kuka.model.jacobn(qK);
+        Jinv = pinv(J2);
+        % get joint velocities
+        qp = Jinv*v;
+
+         
+         %Maximum angular velocity cannot exceed 180 degrees/s
+         ind=find(qp>pi);
+         if ~isempty(ind)
+             qp(ind)=pi;
+         end
+         ind=find(qp<-pi);
+         if ~isempty(ind)
+             qp(ind)=-pi;
+         end
+
+        %Update joints 
+        q = qK + (1/fps)*qp;
+        kuka.model.animate(q');
+
+        %Get camera location
+        Tc = kuka.model.fkine(q);
+        cam.T = Tc;
+        %cam.plot_camera('Tcam',Tc, 'label','scale',0.15);
+        drawnow
+        
+        % update the history variables
+        hist.uv = uv(:);
+        vel = v;
+        hist.vel = vel;
+        hist.e = e;
+        hist.en = norm(e);
+        hist.jcond = cond(J);
+        hist.Tcam = Tc;
+        hist.vel_p = vel;
+        hist.uv_p = uv;
+        hist.qp = qp;
+        hist.q = q;
+
+        history = [history hist];
+
+         pause(1/fps)
+
+        if ~isempty(200) && (ksteps > 200)
+            break;
+        end
+        
+        %update current joint position
+        qK = q;
+ end %loop finishes
+
+
+            
+         
 
 Skynet_GUI;
 

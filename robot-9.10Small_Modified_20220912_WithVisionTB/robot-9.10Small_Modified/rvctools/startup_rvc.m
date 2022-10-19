@@ -1,4 +1,4 @@
-disp('Robotics, Vision & Control: (c) Peter Corke 1992-2011 http://www.petercorke.com')
+ disp('Robotics, Vision & Control: (c) Peter Corke 1992-2011 http://www.petercorke.com')
 
 if verLessThan('matlab', '7.0')
     warning('You are running a very old (and unsupported) version of MATLAB.  You will very likely encounter significant problems using the toolboxes but you are on your own with this');
