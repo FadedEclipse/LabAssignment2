@@ -5,7 +5,7 @@ hold on
 bot = UR3();
 bot.model.base = transl(-0.318,0.112,0.3);
 qU = [0, -pi/2, deg2rad(79), deg2rad(-125), pi/2, 0];
-pStar = [512;512];
+pStar = [512;643.25];
 
 r = KUKA();
 
@@ -44,9 +44,10 @@ history = [];
  
 
 [ikPath] = RMRCTraj(bot);
+
         
         for i = 1:size(ikPath,1)
-            
+         
         Tc0= r.model.fkine(qK);
 
 
@@ -76,8 +77,8 @@ cam.plot(P);
         sphere_h = plot_sphere(P, 0.05, 'b');
         
         drawnow();
-        pause(0.1);
-        %delete(sphere_h);
+        pause(0.01);
+        
         
           % compute the view of the camera
         uv = cam.plot(P);
@@ -149,7 +150,7 @@ cam.plot(P);
 
         history = [history hist];
 
-         pause(1/fps)
+        
 
         
         %update current joint position
