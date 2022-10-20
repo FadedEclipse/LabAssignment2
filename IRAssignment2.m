@@ -86,21 +86,34 @@ Skynet_GUI;
 
 %% Image Based Visual Servoing
 
-% Create image target (points in the image plane) 
-pStar = [662 362 362 662; 362 362 662 662];
+clc 
+clf 
+clear all 
+hold on
+bot = UR3();
+bot.model.base = transl(-0.318,0.112,0.3);
+qU = [0, -pi/2, deg2rad(79), deg2rad(-125), pi/2, 0];
+pStar = [512;643.25];
 
-%Create 3D points
-P=[1.8,1.8,1.8,1.8;
--0.25,0.25,0.25,-0.25;
- 1.25,1.25,0.75,0.75];
+r = KUKA();
 
-% Add the camera
+
+
+qK = [-pi/2; pi/4; -pi/4; 0; 0; 0];
+bot.model.animate(qU);
+r.model.animate(qK');
+
+        m = bot.model.getpos();
+        P = bot.model.fkine(m);
+        P = P(1:3,4);
+
+
+        
 cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...
-'resolution', [1024 1024], 'centre', [512 512],'name', 'Kukacamera');
+'resolution', [1024 1024], 'centre', [512 512],'name', 'KUKAcamera');
 
-%Set FPS
+% frame rate
 fps = 25;
-
 
 %Define values
 %gain of the controler
@@ -109,20 +122,28 @@ lambda = 0.6;
 depth = mean (P(1,:));
 
 
-Tc0= kuka.model.fkine(qK);
 
-drawnow
 
-% plot camera and points
+
+vel_p = [];
+uv_p = [];
+history = [];
+
+ 
+
+[ikPath] = RMRCTraj(bot);
+
+        
+        for i = 1:size(ikPath,1)
+         
+        Tc0= r.model.fkine(qK);
+
+
 cam.T = Tc0;
 
 % Display points in 3D and the camera
 cam.plot_camera('Tcam',Tc0, 'label','scale',0.15);
-plot_sphere(P, 0.02, 'b')
-lighting gouraud
-light
 
-%Project points to the image
 p = cam.plot(P, 'Tcam', Tc0);
 
 %camera view and plotting
@@ -130,23 +151,24 @@ cam.clf()
 cam.plot(pStar, '*'); % create the camera view
 cam.hold(true);
 cam.plot(P, 'Tcam', Tc0, 'o'); % create the camera view
-pause(2)
+
 cam.hold(true);
-cam.plot(P);    % show initial view
-
-
-%Initialise display arrays
-vel_p = [];
-uv_p = [];
-history = [];
-
-
-% loop of the visual servoing
-ksteps = 0;
- while true
-        ksteps = ksteps + 1;
+cam.plot(P);     
         
-        % compute the view of the camera
+        
+        bot.model.animate(ikPath(i,:));
+        
+        
+        m = bot.model.getpos();
+        P = bot.model.fkine(m);
+        P = P(1:3,4);
+        sphere_h = plot_sphere(P, 0.05, 'b');
+        
+        drawnow();
+        pause(0.01);
+        
+        
+          % compute the view of the camera
         uv = cam.plot(P);
         
         % compute image plane error as a column
@@ -175,7 +197,7 @@ ksteps = 0;
         fprintf('v: %.3f %.3f %.3f %.3f %.3f %.3f\n', v);
 
         %compute robot's Jacobian and inverse
-        J2 = kuka.model.jacobn(qK);
+        J2 = r.model.jacobn(qK);
         Jinv = pinv(J2);
         % get joint velocities
         qp = Jinv*v;
@@ -184,7 +206,7 @@ ksteps = 0;
          %Maximum angular velocity cannot exceed 180 degrees/s
          ind=find(qp>pi);
          if ~isempty(ind)
-             qp(ind)=pi; 
+             qp(ind)=pi;
          end
          ind=find(qp<-pi);
          if ~isempty(ind)
@@ -192,13 +214,13 @@ ksteps = 0;
          end
 
         %Update joints 
-        q = qK + (1/fps)*qp;
-        kuka.model.animate(q');
+        qM = qK + (1/fps)*qp;
+        r.model.animate(qM');
 
         %Get camera location
-        Tc = kuka.model.fkine(q);
+        Tc = r.model.fkine(qM);
         cam.T = Tc;
-        %cam.plot_camera('Tcam',Tc, 'label','scale',0.15);
+
         drawnow
         
         % update the history variables
@@ -212,37 +234,14 @@ ksteps = 0;
         hist.vel_p = vel;
         hist.uv_p = uv;
         hist.qp = qp;
-        hist.q = q;
+        hist.qM = qM;
 
         history = [history hist];
 
-         pause(1/fps)
-
-        if ~isempty(200) && (ksteps > 200)
-            break;
-        end
+        
         
         %update current joint position
-        qK = q;
- end %loop finishes
+        qK = qM;
 
-
-            
-         
-%% refer to this to make ur3 move with rmrc
-
-clc 
-clear all
-clf
-hold on
-robot = UR3();        % Load robot model
-
-[ikPath] = RMRCTraj(robot);
-
-for i= 1:size(ikPath,1)
-robot.model.animate(ikPath(i,:));
-
-drawnow();
-pause(0.01);
-end
-
+        end
+        
