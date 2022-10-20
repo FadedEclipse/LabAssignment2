@@ -3,7 +3,7 @@ clf
 hold on 
 clear all
 camlight;
-caxis ([-2 2 -2 1 0 1.28]);
+axis ([-2 2 -2 1 0 1.28]);
 
 
 
@@ -181,7 +181,7 @@ ksteps = 0;
          %Maximum angular velocity cannot exceed 180 degrees/s
          ind=find(qp>pi);
          if ~isempty(ind)
-             qp(ind)=pi;
+             qp(ind)=pi; 
          end
          ind=find(qp<-pi);
          if ~isempty(ind)
@@ -226,7 +226,7 @@ ksteps = 0;
 
             
          
-
+%%
 Skynet_GUI;
 
 
