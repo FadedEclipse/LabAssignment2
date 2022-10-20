@@ -1,10 +1,12 @@
-robot = UR3();
-ikPath = RMRCTraj(robot,point1,point2)
-%%
-[ikPath] = RMRCTraj(robot,point1,point2)
-% 1.1) Set parameters for the simulation
+function [ikPath] = RMRCTraj(robot)
+robot.model.base = transl(-0.5,0.112,0.3);
+q1 = [0 -pi/2 deg2rad(79) deg2rad(-125) pi/2 0];
+
+
+robot.model.animate(q1);
+
 t = 10;             % Total time (s)
-deltaT = 0.1;      % Control frequency
+deltaT = 0.05;      % Control frequency
 steps = t/deltaT;   % No. of steps for simulation
 delta = 2*pi/steps; % Small angle change
 epsilon = 0.1;      % Threshold value for manipulability/Damped Least Squares
@@ -20,22 +22,25 @@ positionError = zeros(3,steps); % For plotting trajectory error
 angleError = zeros(3,steps);    % For plotting trajectory error
 
 % 1.3) Set up trajectory, initial pose
-pt1 = [-0.318,-0.512,0.855];
-pt2 = [-0318, -0.512,0.955]; % Trapezoidal trajectory scalar
-
-traj = ctraj(pt1,pt2,steps);  
-
+s = lspb(0,1,steps);                % Trapezoidal trajectory scalar
+for i=1:steps
+    x(1,i) = (1-s(i))*-0.710 + s(i)*-0.710; % Points in x
+    x(2,i) = (1-s(i))*0 + s(i)*0; % Points in y
+    x(3,i) =(1-s(i))*0.855 + s(i)*0.955; % Points in z
+    theta(1,i) = 0;                 % Roll angle 
+    theta(2,i) = 0;            % Pitch angle
+    theta(3,i) = 0;                 % Yaw angle
+end
  
-T = traj(:,:,1);          % Create transformation of first point and angle
-x = T(1:3,4,1);
-q0 = zeros(1,6);                                                            % Initial guess for joint angles
+T = [rpy2r(theta(1,1),theta(2,1),theta(3,1)) x(:,1);zeros(1,3) 1];          % Create transformation of first point and angle
+q0 = q1;                                                            % Initial guess for joint angles
 qMatrix(1,:) = robot.model.ikcon(T,q0);                                            % Solve joint angles to achieve first waypoint
 
 % 1.4) Track the trajectory with RMRC
 for i = 1:steps-1
     T = robot.model.fkine(qMatrix(i,:));                                           % Get forward transformation at current joint state
     deltaX = x(:,i+1) - T(1:3,4);                                         	% Get position error from next waypoint
-    Rd = rpy2r(theta(:,i));                     % Get next RPY angles, convert to rotation matrix
+    Rd = rpy2r(theta(1,i+1),theta(2,i+1),theta(3,i+1));                     % Get next RPY angles, convert to rotation matrix
     Ra = T(1:3,1:3);                                                        % Current end-effector rotation matrix
     Rdot = (1/deltaT)*(Rd - Ra);                                                % Calculate rotation matrix error
     S = Rdot*Ra';                                                           % Skew symmetric!
@@ -65,9 +70,11 @@ for i = 1:steps-1
 end
 
 % 1.5) Plot the results
+figure(1)
 plot3(x(1,:),x(2,:),x(3,:),'k.','LineWidth',1)
 
 ikPath = qMatrix;
+
 
 end
 

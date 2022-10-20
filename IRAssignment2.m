@@ -81,6 +81,8 @@ vertices = get(Rum_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.5,0.7,0.5)';
 set(Rum_h,'Vertices',transformedVertices(:,1:3));
 
+Skynet_GUI;
+
 %% Image Based Visual Servoing
 
 % Create image target (points in the image plane) 
@@ -226,7 +228,20 @@ ksteps = 0;
 
             
          
-%%
-Skynet_GUI;
+%% refer to this to make ur3 move with rmrc
 
+clc 
+clear all
+clf
+hold on
+robot = UR3();        % Load robot model
+
+[ikPath] = RMRCTraj(robot);
+
+for i= 1:size(ikPath,1)
+robot.model.animate(ikPath(i,:));
+
+drawnow();
+pause(0.01);
+end
 

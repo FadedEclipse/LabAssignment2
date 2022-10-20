@@ -22,7 +22,7 @@ pStar = [512; 512];
 % Make a UR10
 bot = UR3();
 r = KUKA();             
-workspace = [-2 2 -2 2 0 2];
+axis([-2 2 -2 2 0 2]);
 %Initial pose
 q0 = [-pi/2; pi/8; -pi/8; 0; 0; 0;];
 qU = [0; -pi/2; deg2rad(79); deg2rad(-125); pi/2; 0;];
