@@ -2,6 +2,7 @@ clc
 clf
 hold on 
 clear all
+view(32,19)
 camlight;
 axis ([-2 2 -2 1 0 1.28]);
 
@@ -10,13 +11,13 @@ axis ([-2 2 -2 1 0 1.28]);
  ur3 = UR3();
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
-qK = [pi/2  pi/4         -pi/4   0    0        0];
+
 ur3.model.animate(q1);
 
 
 kuka = KUKA(); 
 
-kuka.model.animate(qK);
+view(32,19)
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
