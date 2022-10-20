@@ -4,7 +4,7 @@ classdef UR3 < handle
         model;
         
         %> workspace
-        workspace = [-0.6 0.6 -0.6 0.6 -0.2 1.1];   
+        workspace = [-2 2 -2 2 0 2];   
       
     end
     
