@@ -5,10 +5,11 @@ joy = vrjoystick(id);
 caps(joy) % display joystick information                
 
 %% Start "real-time" simulation
+% This is a version of the lab 11 code that works specifically with our
+% robots
 qK = [pi/2  pi/4         -pi/4   0    0        0];
 q = qK;                
 
-%kuka.model.animate(q);          % Plot robot in initial configuration
 kuka.model.delay = 0.001;    % Set smaller delay when animating
 
 duration = 300;  % Set duration of the simulation (seconds)
@@ -23,7 +24,7 @@ while( toc < duration)
     % read joystick
     [axes, buttons, povs] = read(joy);
        
-    % 1 - turn joystick input into an end-effector velocity command
+    % turn joystick input into an end-effector velocity command
     Kv = 0.3; % linear velocity gain
     Kw = 0.8; % angular velocity gain
     
@@ -37,16 +38,14 @@ while( toc < duration)
     
     dx = [vx;vy;vz;wx;wy;wz]; % combined velocity vector
     
-    % 2 - use DLS J inverse to calculate joint velocity
+    % use damped least squares Jacobian inverse to calculate joint velocity
     lambda = 0.5;
     J = kuka.model.jacob0(q);
     Jinv_dls = inv((J'*J)+lambda^2*eye(6))*J';
     dq = Jinv_dls*dx;
     
-    % 3 - apply joint velocity to step robot joint angles 
+    % apply joint velocity to step robot joint angles 
     q = q + dq'*dt;
-      
-    % -------------------------------------------------------------
     
     % Update plot
     kuka.model.animate(q);  
