@@ -6,38 +6,22 @@ close all
 clf
 
 %% 1.1 Definitions
-%workspace = [-2 2 -2 2 0 2];
+
 
 % Create image target (points in the image plane) 
-pStar = [512; 512];
+pStar = [512;512];
 
 %Create 3D points
+P=[1.8,1.8,1.8,1.8;
+-0.25,0.25,0.25,-0.25;
+ 1.25,1.25,0.75,0.75];
 
-%P=[1.8;0;1.25];  
-%m = ur3.model.getpos();
-
-%P = ur3.model.fkine(q);
-%P = P(1:3,4);
 
 % Make a UR10
-bot = UR3();
 r = KUKA();             
-axis([-2 2 -2 2 0 2]);
+
 %Initial pose
-q0 = [-pi/2; pi/8; -pi/8; 0; 0; 0;];
-qU = [0; -pi/2; deg2rad(79); deg2rad(-125); pi/2; 0;];
-bot.model.base = transl(-0.5,0.112,0.3);
-
-Tc0= r.model.fkine(q0);
-r.model.animate(q0');
-bot.model.animate(qU');
-drawnow
-
-m = bot.model.getpos();
-P = bot.model.fkine(m);
-P = P(1:3,4);
-
-
+q0 = [pi/2; -pi/3; -pi/3; -pi/6; 0; 0];
 
 % Add the camera
 cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...
@@ -55,13 +39,9 @@ depth = mean (P(1,:));
 %% 1.2 Initialise Simulation (Display in 3D)
 
 %Display UR10
-% Tc0= r.model.fkine(q0);
-% r.model.animate(q0');
-% bot.model.animate(qU');
-% drawnow
-
-
-
+Tc0= r.model.fkine(q0);
+r.model.animate(q0');
+drawnow
 
 % plot camera and points
 cam.T = Tc0;
@@ -97,34 +77,6 @@ history = [];
 ksteps = 0;
  while true
         ksteps = ksteps + 1;
-        
-        a = transl([-0.318,-0.512,1.05]);
-        startPT = bot.model.fkine(qU);
-        endPT = a;
-        tPath = ctraj(startPT, endPT, 200);
-        
-        ikinePath = bot.model.ikcon(tPath, qU);
-        
-        bot.model.animate(ikinePath(1,:));
-        
-        %drawnow();
-        
-        qU = ikinePath(end,:);
-        
-        m = bot.model.getpos();
-        P = bot.model.fkine(m);
-        P = P(1:3,4);
-        p = cam.plot(P, 'Tcam', Tc0);
-
-        %camera view and plotting
-        cam.clf()
-        cam.plot(pStar, '*'); % create the camera view
-        cam.hold(true);
-        cam.plot(P, 'Tcam', Tc0, 'o'); % create the camera view
-        pause(2)
-        cam.hold(true);
-        cam.plot(P);
-        drawnow();
         
         % compute the view of the camera
         uv = cam.plot(P);
@@ -162,24 +114,24 @@ ksteps = 0;
 
          
          %Maximum angular velocity cannot exceed 180 degrees/s
-         ind=find(qp>pi/2);
+         ind=find(qp>pi);
          if ~isempty(ind)
-             qp(ind)=pi/2;
+             qp(ind)=pi;
          end
-         ind=find(qp<-pi/2);
+         ind=find(qp<-pi);
          if ~isempty(ind)
-             qp(ind)=-pi/2;
+             qp(ind)=-pi;
          end
 
         %Update joints 
         q = q0 + (1/fps)*qp;
         r.model.animate(q');
-      
+
         %Get camera location
         Tc = r.model.fkine(q);
         cam.T = Tc;
+
         drawnow
-        
         
         % update the history variables
         hist.uv = uv(:);
