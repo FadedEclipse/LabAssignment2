@@ -20,7 +20,7 @@ m = bot.model.getpos();
         P = P(1:3,4);
 
 cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...
-'resolution', [1024 1024], 'centre', [512 512],'name', 'UR10camera');
+'resolution', [1024 1024], 'centre', [512 512],'name', 'KUKAcamera');
 
 % frame rate
 fps = 25;
