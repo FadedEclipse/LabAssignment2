@@ -1,10 +1,19 @@
 function Sprite(ur3,kuka,Sprite_h,vertices,transformedVertices,BartransformedVertices,BenchtransformedVertices)
+% All q values / waypoints are determined via using teach and moving the
+% robot into a set of waypoints that ensures it is not in collision
+%InterpolateWaypointRadians allows you to pass in bulk way points - 
+%Within InterpolateWaypointRadians Fine interpolation function uses jtraj
+%to create a minminum step where the default is 1 degree step radians -
+%returns a set of poses for the robot to move through to avoid collision -
+%as steps inceases in the while loop within Fine interpolation function,
+%step angle decreases, the while loop continues until no pose change is
+%greater than 1 degree
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
 
 %KUKA TRANSPORTS SPRITE BOTTLE
 
-%kuka moves from inital zeros pos to bottle home position
+%kuka moves from inital zeros pos to bottle bench position
 q1kuka = [ 0     0     0     0     0     0];
 qWaypoints = [q1kuka ...
     ; [3.5954    0.2871   -0.7707         0   -0.6981         0] ...
@@ -110,7 +119,7 @@ end
 %pause for pouring
 pause(2);
 
-%ur3 returns bottle to table for kuka to pick up and move back home
+%ur3 returns bottle to table for kuka to pick up and move back bench
 q1 =[1.5254   -1.5708    1.5708   -1.5709    4.1469         0];
 qWaypoints = [q1 ...
     ; [2.2794   -1.5708    1.5708   -1.5709    3.1416         0] ...
@@ -166,7 +175,7 @@ for i = 1:size(qMatrix,1)
     pause(0.01);
 end
 
-%kuka transports bottle from main bar position to home position
+%kuka transports bottle from main bar position to bench position
 q1kuka = [-0.7121   -0.7793    0.4817         0   -0.2373    1.5708];
 qWaypoints = [q1kuka ...
     ; [1.5080    0.6153   -0.5299         0    0.0978    1.5708] ...
@@ -188,7 +197,7 @@ for i = 1:size(qMatrix,1)
     pause(0.01);
 end
 
-%place bottle back home
+%place bottle back bench
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.2,0.7,0.5)';
 set(Sprite_h,'Vertices',transformedVertices(:,1:3));
 
