@@ -2,7 +2,7 @@ function KUKAcontroller(kuka)
 %% Setup and Initialise joystick
 id = 1;
 joy = vrjoystick(id);
-caps(joy) % display joystick information                
+caps(joy); % display joystick information                
 
 %% Start "real-time" simulation
 % This is a version of the lab 11 code that works specifically with our
