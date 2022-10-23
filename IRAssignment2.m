@@ -89,8 +89,6 @@ set(Rum_h,'Vertices',transformedVertices(:,1:3));
 [v,f,fn] = RectangularPrism([-1,-0.6,0.55], [1,0.9,1.1]); %Spawns in environments light curtains / sensors
 
 
- 
-
 Skynet_GUI;
 
 %% Image Based Visual Servoing
