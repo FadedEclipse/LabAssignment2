@@ -8,20 +8,20 @@ axis ([-2 2 -2 1 0 1.28]);
 
 
 
- ur3 = UR3();
+ ur3 = UR3(); % Call and define UR3 in workspace
 
 q1 = [1.5708   -1.5708         0   -1.5709    3.1416        -1.5708];
 
-ur3.model.animate(q1);
+ur3.model.animate(q1); % Update UR3 Position
 
 
-kuka = KUKA(); 
+kuka = KUKA(); % Call KUKA into workspace
 
-hand = Hand();
+hand = Hand(); % Call hand for Object in workspace function 
 hand.model.base = transl(1.5,0,0.6)*trotx(-pi/2)*trotz(pi);
 hand.model.animate(hand.model.base);
 
-view(32,19)
+view(32,19) % Update view of workspace
 
 surf([1,1;-1,-1],[0.99,0.99;0.99,0.99],[0.5,1.28;0.5,1.28],'CData',imread('barwall.jpg'),'FaceColor','texturemap');
 surf([-3,-3;+3,+3],[-3,+3;-3,+3],[0.001,0.001;0.001,0.001],'CData',imread('woodfloor.png'),'FaceColor','texturemap');
@@ -89,7 +89,7 @@ set(Rum_h,'Vertices',transformedVertices(:,1:3));
 [v,f,fn] = RectangularPrism([-1,-0.6,0.55], [1,0.9,1.1]); %Spawns in environments light curtains / sensors
 
 
-Skynet_GUI;
+Skynet_GUI; % Runs GUI Function
 
 %% Image Based Visual Servoing
 

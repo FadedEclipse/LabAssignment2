@@ -1,13 +1,13 @@
 function KUKAcontroller(kuka)
 %% Setup and Initialise joystick
-id = 1;
+id = 1; % Sets ID for controller
 joy = vrjoystick(id);
 caps(joy); % display joystick information                
 
 %% Start "real-time" simulation
 % This is a version of the lab 11 code that works specifically with our
-% robots
-qK = [pi/2  pi/4         -pi/4   0    0        0];
+% robots and this is the same for the UR3 just with robot value changed
+qK = [pi/2  pi/4         -pi/4   0    0        0]; % Sets q values for intial position
 q = qK;                
 
 kuka.model.delay = 0.001;    % Set smaller delay when animating
@@ -28,7 +28,7 @@ while( toc < duration)
     Kv = 0.3; % linear velocity gain
     Kw = 0.8; % angular velocity gain
     
-    vx = Kv*axes(1);
+    vx = Kv*axes(1); 
     vy = Kv*axes(2);
     vz = Kv*(buttons(5)-buttons(7));
     
