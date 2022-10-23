@@ -86,7 +86,7 @@ vertices = get(Rum_h,'Vertices');
 transformedVertices = [vertices,ones(size(vertices,1),1)] * transl(0.5,0.7,0.5)';
 set(Rum_h,'Vertices',transformedVertices(:,1:3));
 
-[v,f,fn] = RectangularPrism([-1,-0.6,0.55], [1,0.9,1.1]); %Spawns in environments light curtains / sensors
+[v,f,fn] = RectangularPrism([-1,-0.6,0.55], [1,0.9,1.1]); %Spawns in environments light curtains / sensors - represents a cube 
 
 
 Skynet_GUI; % Runs GUI Function

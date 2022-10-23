@@ -1,5 +1,7 @@
 function result = IsIntersectionPointInsideTriangle(intersectP,triangleVerts)
-
+% given an intersection point and three verticies of triangle - checks to
+% see whether intersection point is on the same side of a line as the other
+% side/point of the triangle 
 u = triangleVerts(2,:) - triangleVerts(1,:);
 v = triangleVerts(3,:) - triangleVerts(1,:);
 
