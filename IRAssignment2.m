@@ -97,26 +97,27 @@ clc
 clf 
 clear all 
 hold on
-bot = UR3();
+PlaceObject('UR3Box.ply',[-0.65,-0.05,0]);                                 %Spawn UR3 Box
+bot = UR3();                                                               %Spawn UR3
 bot.model.base = transl(-0.318,0.112,0.3);
-qU = [0, -pi/2, deg2rad(79), deg2rad(-125), pi/2, 0];
+qU = [0, -pi/2, deg2rad(79), deg2rad(-125), pi/2, 0];                      %Initial q values for UR3
 pStar = [512;643.25];
 
-r = KUKA();
+r = KUKA();                                                                %Spawn KUKA
 
 
 
-qK = [-pi/2; pi/4; -pi/4; 0; 0; 0];
+qK = [-pi/2; pi/4; -pi/4; 0; 0; 0];                                        %Initialq values for KUKA
 bot.model.animate(qU);
 r.model.animate(qK');
 
-        m = bot.model.getpos();
+        m = bot.model.getpos();                                            %Set coordinates for sphere to be on end affector
         P = bot.model.fkine(m);
         P = P(1:3,4);
 
 
         
-cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...
+cam = CentralCamera('focal', 0.08, 'pixel', 10e-5, ...                     %Set up camera
 'resolution', [1024 1024], 'centre', [512 512],'name', 'KUKAcamera');
 
 % frame rate
@@ -138,7 +139,7 @@ history = [];
 
  
 
-[ikPath] = RMRCTraj(bot);
+[ikPath] = RMRCTraj(bot);                                                  %Using RMRC function to control movement path of UR3
 
         
         for i = 1:size(ikPath,1)
@@ -169,7 +170,7 @@ cam.plot(P);
         m = bot.model.getpos();
         P = bot.model.fkine(m);
         P = P(1:3,4);
-        sphere_h = plot_sphere(P, 0.05, 'b');
+        sphere_h = plot_sphere(P, 0.05, 'b');                              %Plot sphere on end affector of UR3
         
         drawnow();
         pause(0.01);
