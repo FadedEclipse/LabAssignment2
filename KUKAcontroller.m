@@ -7,7 +7,7 @@ caps(joy); % display joystick information
 %% Start "real-time" simulation
 % This is a version of the lab 11 code that works specifically with our
 % robots and this is the same for the UR3 just with robot value changed
-qK = [pi/2  pi/4         -pi/4   0    0        0]; % Sets q values for intial position
+qK = [0  0  0  0   0   0]; % Sets q values for intial position
 q = qK;                
 
 kuka.model.delay = 0.001;    % Set smaller delay when animating
